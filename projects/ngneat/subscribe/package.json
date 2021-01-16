@@ -1,0 +1,28 @@
+{
+  "name": "@ngneat/subscribe",
+  "version": "1.0.0-beta.0",
+  "peerDependencies": {
+    "@angular/common": "^10.1.6",
+    "@angular/core": "^10.1.6"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  },
+  "keywords": [
+    "angular",
+    "angular 2",
+    "subscribe"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "bugs": {
+    "url": "https://github.com/ngneat/subscribe/issue"
+  },
+  "homepage": "https://github.com/ngneat/subscribe#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ngneat/subscribe"
+  }
+}

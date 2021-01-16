@@ -123,6 +123,46 @@
           }
         }
       }
+    },
+    "@ngneat/subscribe": {
+      "projectType": "library",
+      "root": "projects/ngneat/subscribe",
+      "sourceRoot": "projects/ngneat/subscribe/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/ngneat/subscribe/tsconfig.lib.json",
+            "project": "projects/ngneat/subscribe/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngneat/subscribe/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngneat/subscribe/src/test.ts",
+            "tsConfig": "projects/ngneat/subscribe/tsconfig.spec.json",
+            "karmaConfig": "projects/ngneat/subscribe/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngneat/subscribe/tsconfig.lib.json",
+              "projects/ngneat/subscribe/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }},
   "defaultProject": "subscribe"
 }
