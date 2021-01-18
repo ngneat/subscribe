@@ -9,12 +9,14 @@ class SubscribeContext<T> {
 }
 
 @Directive({
-  selector: '[subscribe]'
+  selector: '[subscribe]',
 })
 export class SubscribeDirective<T> implements OnInit {
   private subscription: Subscription | undefined;
 
   private context = new SubscribeContext<T>();
+
+  @Input() strategy: 'markForCheck' | 'detectChanges' = 'markForCheck';
 
   @Input() set subscribe(source: Observable<T> | null | undefined) {
     this.subscription?.unsubscribe();
@@ -28,15 +30,15 @@ export class SubscribeDirective<T> implements OnInit {
         this.context.$implicit = value;
         this.context.subscribe = value;
 
-        this.cdr.markForCheck();
+        this.cdr[this.strategy]();
       },
       error: (err) => {
         this.context.error = err;
       },
       complete: () => {
         this.context.completed = true;
-        this.cdr.markForCheck();
-      }
+        this.cdr[this.strategy]();
+      },
     });
   }
 
@@ -49,20 +51,19 @@ export class SubscribeDirective<T> implements OnInit {
 
   static ngTemplateGuard_subscribe: 'binding';
 
-  constructor(private tpl: TemplateRef<SubscribeContext<T>>,
-              private cdr: ChangeDetectorRef,
-              private vcr: ViewContainerRef) {
-  }
+  constructor(
+    private tpl: TemplateRef<SubscribeContext<T>>,
+    private cdr: ChangeDetectorRef,
+    private vcr: ViewContainerRef
+  ) {}
 
   ngOnInit() {
     this.vcr.createEmbeddedView(this.tpl, this.context);
   }
-
 }
-
 
 @NgModule({
   declarations: [SubscribeDirective],
-  exports: [SubscribeDirective]
+  exports: [SubscribeDirective],
 })
 export class SubscribeModule {}
