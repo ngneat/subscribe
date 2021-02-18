@@ -1,4 +1,13 @@
-import { ChangeDetectorRef, Directive, Input, OnInit, TemplateRef, ViewContainerRef, NgModule } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Directive,
+  Input,
+  OnInit,
+  TemplateRef,
+  ViewContainerRef,
+  NgModule,
+  OnDestroy,
+} from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 
 class SubscribeContext<T> {
@@ -11,7 +20,7 @@ class SubscribeContext<T> {
 @Directive({
   selector: '[subscribe]',
 })
-export class SubscribeDirective<T> implements OnInit {
+export class SubscribeDirective<T> implements OnInit, OnDestroy {
   private subscription: Subscription | undefined;
 
   private context = new SubscribeContext<T>();
@@ -59,6 +68,10 @@ export class SubscribeDirective<T> implements OnInit {
 
   ngOnInit() {
     this.vcr.createEmbeddedView(this.tpl, this.context);
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
   }
 }
 
