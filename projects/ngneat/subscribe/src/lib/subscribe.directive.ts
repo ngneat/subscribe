@@ -43,6 +43,7 @@ export class SubscribeDirective<T> implements OnInit, OnDestroy {
       },
       error: (err) => {
         this.context.error = err;
+        this.cdr[this.strategy]();
       },
       complete: () => {
         this.context.completed = true;
