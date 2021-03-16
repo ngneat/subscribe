@@ -1,13 +1,15 @@
 {
   "name": "@ngneat/subscribe",
-  "version": "1.0.0-beta.2",
+  "description": "Subscription Handling Directive",
+  "version": "1.0.0",
   "dependencies": {
     "tslib": "^2.0.0"
   },
   "keywords": [
     "angular",
     "angular 2",
-    "subscribe"
+    "subscribe",
+    "subscription"
   ],
   "license": "MIT",
   "publishConfig": {

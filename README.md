@@ -7,6 +7,9 @@
 [![spectator](https://img.shields.io/badge/tested%20with-spectator-2196F3.svg?style=flat-square)]()
 
 
+>  Subscription Handling Directive
+
+
 ## Installation
 
 `npm install @ngneat/subscribe`
