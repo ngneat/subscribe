@@ -1,57 +1,47 @@
-<p align="center">
- <img width="20%" height="20%" src="./logo.svg">
-</p>
-
-<br />
-
 [![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg?style=flat-square)]()
 [![commitizen](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square)]()
 [![PRs](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)]()
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
-[![All Contributors](https://img.shields.io/badge/all_contributors-0-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-1)
 [![ngneat](https://img.shields.io/badge/@-ngneat-383636?style=flat-square&labelColor=8f68d4)](https://github.com/ngneat/)
 [![spectator](https://img.shields.io/badge/tested%20with-spectator-2196F3.svg?style=flat-square)]()
 
-> The Library Slogan
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid assumenda atque blanditiis cum delectus eligendi ipsam iste iure, maxime modi molestiae nihil obcaecati odit officiis pariatur quibusdam suscipit temporibus unde.
-Accusantium aliquid corporis cupiditate dolores eum exercitationem illo iure laborum minus nihil numquam odit officiis possimus quas quasi quos similique, temporibus veritatis? Exercitationem, iure magni nulla quo sapiente soluta. Esse?
-
-## Features
-
-- ✅ One
-- ✅ Two
-- ✅ Three
-
-## Table of Contents
-
-- [Installation](#installation)
-- [Usage](#usage)
-- [FAQ](#faq)
 
 ## Installation
 
-### NPM
+`npm install @ngneat/subscribe`
 
-`npm install @ngneat/subscribe --save-dev`
-
-### Yarn
-
-`yarn add @ngneat/subscribe --dev`
 
 ## Usage
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid assumenda atque blanditiis cum delectus eligendi ipsam iste iure, maxime modi molestiae nihil obcaecati odit officiis pariatur quibusdam suscipit temporibus unde.
+First, we need to import the `SubscribeModule`:
 
 ```ts
-function helloWorld() {}
+import { SubscribeModule } from '@ngneat/subscribe';
+
+@NgModule({
+  imports: [SubscribeModule]
+})
+class MyModule {}
 ```
 
-## FAQ
+Now we can use the `subscribe` directive in our template:
 
-## How to ...
+```ts
+@Component({
+  template: `
+    <ng-container *subscribe="getUsers$; let users; let error=error">
+      {{ users | json }}
+      {{ error }}
+    </ng-container>
+  `
+})
+class MyComponent {
+  getUsers$ = this.service.getUsers();
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid assumenda atque blanditiis cum delectus eligendi ips
+  constructor(private service: UserService) {}
+}
+```
+
 
 ## Contributors ✨
 
@@ -60,7 +50,13 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
-<!-- markdownlint-enable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://www.netbasal.com/"><img src="https://avatars.githubusercontent.com/u/6745730?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Netanel Basal</b></sub></a><br /><a href="https://github.com/@ngneat/subscribe/commits?author=NetanelBasal" title="Code">💻</a> <a href="#ideas-NetanelBasal" title="Ideas, Planning, & Feedback">🤔</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
