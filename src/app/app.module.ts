@@ -3,14 +3,18 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { SubscribeModule } from '@ngneat/subscribe';
+import { BarComponent } from './bar/bar.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    BarComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    SubscribeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

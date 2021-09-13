@@ -11,8 +11,8 @@ import {
 import { Observable, Subscription } from 'rxjs';
 
 class SubscribeContext<T> {
-  $implicit: T | undefined = undefined;
-  subscribe: T | undefined = undefined;
+  $implicit: T | undefined;
+  subscribe: T | undefined;
   error: any = undefined;
   completed: boolean = false;
 }
@@ -27,7 +27,7 @@ export class SubscribeDirective<T> implements OnInit, OnDestroy {
 
   @Input() strategy: 'markForCheck' | 'detectChanges' = 'markForCheck';
 
-  @Input() set subscribe(source: Observable<T> | null | undefined) {
+  @Input() set subscribe(source: Observable<T>) {
     this.subscription?.unsubscribe();
 
     if (!source) {
@@ -52,14 +52,12 @@ export class SubscribeDirective<T> implements OnInit, OnDestroy {
     });
   }
 
-  static SubscribeDirective<T>(
+  static ngTemplateContextGuard<T>(
     directive: SubscribeDirective<T>,
-    context: unknown | null | undefined
+    context: unknown
   ): context is SubscribeContext<T> {
     return true;
   }
-
-  static ngTemplateGuard_subscribe: 'binding';
 
   constructor(
     private tpl: TemplateRef<SubscribeContext<T>>,
