@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/ngneat/subscribe/compare/v1.0.0...v2.0.0) (2021-09-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* upgrade to v12 and support strict types
+
+### Features
+
+* strict type and upgrade to v12 ([f47ee52](https://github.com/ngneat/subscribe/commit/f47ee527114eb11519f3fc0737d8bd874fadfa45))
+
 ## 1.0.0 (2021-03-16)
 
 
