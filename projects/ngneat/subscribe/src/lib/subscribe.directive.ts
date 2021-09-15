@@ -9,22 +9,29 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-
-class SubscribeContext<T> {
-  $implicit: T | undefined;
-  subscribe: T | undefined;
-  error: any = undefined;
-  completed: boolean = false;
+interface SubscribeContext<T> {
+  $implicit: T;
+  subscribe: T;
+  error: any;
+  completed: boolean;
 }
+
+type IfAny<T, Y, N> = 0 extends (1 & T) ? Y : N;
 
 @Directive({
   selector: '[subscribe]',
 })
-export class SubscribeDirective<T> implements OnInit, OnDestroy {
+export class SubscribeDirective<T, InitialSyncValue extends boolean = true> implements OnInit, OnDestroy {
   private subscription: Subscription | undefined;
 
-  private context = new SubscribeContext<T>();
+  private context: SubscribeContext<any> = {
+    $implicit: undefined,
+    subscribe: undefined,
+    error: undefined,
+    completed: false
+  };
 
+  @Input() initialSyncValue!: InitialSyncValue;
   @Input() strategy: 'markForCheck' | 'detectChanges' = 'markForCheck';
 
   @Input() set subscribe(source: Observable<T>) {
@@ -52,15 +59,15 @@ export class SubscribeDirective<T> implements OnInit, OnDestroy {
     });
   }
 
-  static ngTemplateContextGuard<T>(
-    directive: SubscribeDirective<T>,
+  static ngTemplateContextGuard<T, InitialSyncValue extends boolean = true>(
+    directive: SubscribeDirective<T, InitialSyncValue>,
     context: unknown
-  ): context is SubscribeContext<T> {
+  ): context is SubscribeContext<IfAny<InitialSyncValue, T, T | undefined>>{
     return true;
   }
 
   constructor(
-    private tpl: TemplateRef<SubscribeContext<T>>,
+    private tpl: TemplateRef<any>,
     private cdr: ChangeDetectorRef,
     private vcr: ViewContainerRef
   ) {}

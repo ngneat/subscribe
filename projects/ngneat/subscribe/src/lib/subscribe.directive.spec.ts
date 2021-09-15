@@ -4,7 +4,7 @@ import { of, throwError } from 'rxjs';
 import { SubscribeDirective } from './subscribe.directive';
 
 describe('SubscribeDirective', () => {
-  let host: SpectatorHost<SubscribeDirective<any>>;
+  let host: SpectatorHost<SubscribeDirective<any, any>>;
 
   const createHost = createHostFactory(SubscribeDirective);
 

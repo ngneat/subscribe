@@ -1,5 +1,9 @@
-<ng-template [subscribe]="source$" let-value>
-  {{ value?.bar?.label }}
+<ng-template [subscribe]="source$" let-value> 
+  {{ value | json }}
+</ng-template>
+
+<ng-template [subscribe]="source$" let-value [initialSyncValue]="false"> 
+  {{ value | json }}
 </ng-template>
 
 <ng-container *subscribe="source$; let v">
