@@ -22,7 +22,7 @@ type IfAny<T, Y, N> = 0 extends (1 & T) ? Y : N;
   selector: '[subscribe]',
 })
 export class SubscribeDirective<T, InitialSyncValue extends boolean = true> implements OnInit, OnDestroy {
-  private subscription: Subscription | undefined;
+  private subscription: Subscription | null = null;
 
   private context: SubscribeContext<any> = {
     $implicit: undefined,
@@ -78,6 +78,7 @@ export class SubscribeDirective<T, InitialSyncValue extends boolean = true> impl
 
   ngOnDestroy() {
     this.subscription?.unsubscribe();
+    this.subscription = null;
   }
 }
 
