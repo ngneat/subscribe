@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/ngneat/subscribe/compare/v2.1.1...v3.0.0) (2021-11-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* 🧨 Peer dep of ng13
+
+### Features
+
+* 🎸 upgrade to v13 ([920ac15](https://github.com/ngneat/subscribe/commit/920ac15adf5ad898c13c24cf80c5e685ac5110fe))
+
 ### [2.1.1](https://github.com/ngneat/subscribe/compare/v2.1.0...v2.1.1) (2021-09-18)
 
 
