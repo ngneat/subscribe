@@ -1,1 +1,1 @@
-export { SubscribeModule} from './lib/subscribe.directive';
+export { SubscribeModule, SubscribeDirective } from './lib/subscribe.directive';
