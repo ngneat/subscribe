@@ -7,6 +7,7 @@ import {
   ViewContainerRef,
   NgModule,
   OnDestroy,
+  EmbeddedViewRef,
 } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 interface SubscribeContext<T> {
@@ -16,19 +17,20 @@ interface SubscribeContext<T> {
   completed: boolean;
 }
 
-type IfAny<T, Y, N> = 0 extends (1 & T) ? Y : N;
+type IfAny<T, Y, N> = 0 extends 1 & T ? Y : N;
 
 @Directive({
   selector: '[subscribe]',
 })
 export class SubscribeDirective<T, InitialSyncValue extends boolean = true> implements OnInit, OnDestroy {
   private subscription: Subscription | null = null;
+  private viewRef: EmbeddedViewRef<any> | null = null;
 
   private context: SubscribeContext<any> = {
     $implicit: undefined,
     subscribe: undefined,
     error: undefined,
-    completed: false
+    completed: false,
   };
 
   @Input() initialSyncValue!: InitialSyncValue;
@@ -45,16 +47,15 @@ export class SubscribeDirective<T, InitialSyncValue extends boolean = true> impl
       next: (value) => {
         this.context.$implicit = value;
         this.context.subscribe = value;
-
-        this.cdr[this.strategy]();
+        this.onChange();
       },
       error: (err) => {
         this.context.error = err;
-        this.cdr[this.strategy]();
+        this.onChange();
       },
       complete: () => {
         this.context.completed = true;
-        this.cdr[this.strategy]();
+        this.onChange();
       },
     });
   }
@@ -62,23 +63,28 @@ export class SubscribeDirective<T, InitialSyncValue extends boolean = true> impl
   static ngTemplateContextGuard<T, InitialSyncValue extends boolean = true>(
     directive: SubscribeDirective<T, InitialSyncValue>,
     context: unknown
-  ): context is SubscribeContext<IfAny<InitialSyncValue, T, T | undefined>>{
+  ): context is SubscribeContext<IfAny<InitialSyncValue, T, T | undefined>> {
     return true;
   }
 
-  constructor(
-    private tpl: TemplateRef<any>,
-    private cdr: ChangeDetectorRef,
-    private vcr: ViewContainerRef
-  ) {}
+  constructor(private tpl: TemplateRef<any>, private cdr: ChangeDetectorRef, private vcr: ViewContainerRef) {}
 
   ngOnInit() {
-    this.vcr.createEmbeddedView(this.tpl, this.context);
+    this.viewRef = this.vcr.createEmbeddedView(this.tpl, this.context);
   }
 
   ngOnDestroy() {
     this.subscription?.unsubscribe();
     this.subscription = null;
+    this.viewRef = null;
+  }
+
+  private onChange() {
+    if (this.strategy === 'markForCheck') {
+      this.cdr.markForCheck();
+    } else {
+      this.viewRef?.detectChanges();
+    }
   }
 }
 
