@@ -6,7 +6,7 @@ import {
   TemplateRef,
   ViewContainerRef,
   NgModule,
-  OnDestroy,
+  OnDestroy, EmbeddedViewRef,
 } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 interface SubscribeContext<T> {
@@ -23,6 +23,7 @@ type IfAny<T, Y, N> = 0 extends (1 & T) ? Y : N;
 })
 export class SubscribeDirective<T, InitialSyncValue extends boolean = true> implements OnInit, OnDestroy {
   private subscription: Subscription | null = null;
+  private viewRef: EmbeddedViewRef<any> | null = null;
 
   private context: SubscribeContext<any> = {
     $implicit: undefined,
@@ -45,16 +46,15 @@ export class SubscribeDirective<T, InitialSyncValue extends boolean = true> impl
       next: (value) => {
         this.context.$implicit = value;
         this.context.subscribe = value;
-
-        this.cdr[this.strategy]();
+        this.onChange();
       },
       error: (err) => {
         this.context.error = err;
-        this.cdr[this.strategy]();
+        this.onChange();
       },
       complete: () => {
         this.context.completed = true;
-        this.cdr[this.strategy]();
+        this.onChange();
       },
     });
   }
@@ -73,12 +73,20 @@ export class SubscribeDirective<T, InitialSyncValue extends boolean = true> impl
   ) {}
 
   ngOnInit() {
-    this.vcr.createEmbeddedView(this.tpl, this.context);
+    this.viewRef = this.vcr.createEmbeddedView(this.tpl, this.context);
   }
 
   ngOnDestroy() {
     this.subscription?.unsubscribe();
     this.subscription = null;
+  }
+
+  private onChange() {
+    if (this.strategy === 'markForCheck') {
+      this.cdr.markForCheck();
+    } else {
+      this.viewRef?.detectChanges();
+    }
   }
 }
 
