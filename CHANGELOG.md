@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.2](https://github.com/ngneat/subscribe/compare/v2.1.1...v2.1.2) (2022-01-30)
+
+
+### Bug Fixes
+
+* 🐛 run change detection only on the embeded view ([c432780](https://github.com/ngneat/subscribe/commit/c4327801b3429f6320be4a00c0afebc186e2e7d9))
+
 ### [2.1.1](https://github.com/ngneat/subscribe/compare/v2.1.0...v2.1.1) (2021-09-18)
 
 
