@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.2](https://github.com/ngneat/subscribe/compare/v3.0.1...v3.0.2) (2022-03-28)
+
+
+### Bug Fixes
+
+* 🐛 log the error in case one is thrown ([726c9e6](https://github.com/ngneat/subscribe/commit/726c9e69315915cdb3765b62a1c8d851bdb613ca))
+
 ### [3.0.1](https://github.com/ngneat/subscribe/compare/v3.0.0...v3.0.1) (2022-01-30)
 
 
