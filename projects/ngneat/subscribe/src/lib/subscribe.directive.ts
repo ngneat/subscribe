@@ -50,6 +50,7 @@ export class SubscribeDirective<T, InitialSyncValue extends boolean = true> impl
         this.onChange();
       },
       error: (err) => {
+        console.error(err);
         this.context.error = err;
         this.onChange();
       },
