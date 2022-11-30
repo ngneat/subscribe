@@ -9,61 +9,26 @@
 
 >  Subscription Handling Directive
 
-
 ## Installation
 
 `npm install @ngneat/subscribe`
 
-
 ## Usage
-First, we need to import the `SubscribeModule`:
+Now we can import the `SubscribeDirective` and use the `subscribe` directive in our template:
 
 ```ts
-import { SubscribeModule } from '@ngneat/subscribe';
+import { SubscribeDirective } from '@ngneat/subscribe';
 
-@NgModule({
-  imports: [SubscribeModule]
-})
-class MyModule {}
-```
-
-Now we can use the `subscribe` directive in our template:
-
-```ts
 @Component({
+  imports: [SubscribeDirective],
   template: `
-    <ng-container *subscribe="getUsers$; let users; let error=error">
+    <ng-container *subscribe="users$ as users; let error=error">
       {{ users | json }}
       {{ error }}
     </ng-container>
   `
 })
 class MyComponent {
-  getUsers$ = this.service.getUsers();
-
-  constructor(private service: UserService) {}
+  users$ = inject(UserService).getUsers();
 }
 ```
-
-
-## Contributors ✨
-
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table>
-  <tr>
-    <td align="center"><a href="https://www.netbasal.com/"><img src="https://avatars.githubusercontent.com/u/6745730?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Netanel Basal</b></sub></a><br /><a href="https://github.com/@ngneat/subscribe/commits?author=NetanelBasal" title="Code">💻</a> <a href="#ideas-NetanelBasal" title="Ideas, Planning, & Feedback">🤔</a></td>
-  </tr>
-</table>
-
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
-
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
-
-<div>Icons made by <a href="http://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>

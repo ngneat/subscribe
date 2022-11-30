@@ -1,15 +1,6 @@
-import {
-  ChangeDetectorRef,
-  Directive,
-  Input,
-  OnInit,
-  TemplateRef,
-  ViewContainerRef,
-  NgModule,
-  OnDestroy,
-  EmbeddedViewRef,
-} from '@angular/core';
+import { ChangeDetectorRef, Directive, EmbeddedViewRef, Input, OnDestroy, OnInit, TemplateRef, ViewContainerRef, } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
+
 interface SubscribeContext<T> {
   $implicit: T;
   subscribe: T;
@@ -17,29 +8,27 @@ interface SubscribeContext<T> {
   completed: boolean;
 }
 
-type IfAny<T, Y, N> = 0 extends 1 & T ? Y : N;
-
 @Directive({
   selector: '[subscribe]',
+  standalone: true
 })
-export class SubscribeDirective<T, InitialSyncValue extends boolean = true> implements OnInit, OnDestroy {
+export class SubscribeDirective<T> implements OnInit, OnDestroy {
   private subscription: Subscription | null = null;
   private viewRef: EmbeddedViewRef<any> | null = null;
 
-  private context: SubscribeContext<any> = {
-    $implicit: undefined,
-    subscribe: undefined,
+  private context: SubscribeContext<T> = {
+    $implicit: undefined as T,
+    subscribe: undefined as T,
     error: undefined,
     completed: false,
   };
 
-  @Input() initialSyncValue!: InitialSyncValue;
   @Input() strategy: 'markForCheck' | 'detectChanges' = 'markForCheck';
 
   @Input() set subscribe(source: Observable<T>) {
     this.subscription?.unsubscribe();
 
-    if (!source) {
+    if(!source) {
       return;
     }
 
@@ -61,14 +50,15 @@ export class SubscribeDirective<T, InitialSyncValue extends boolean = true> impl
     });
   }
 
-  static ngTemplateContextGuard<T, InitialSyncValue extends boolean = true>(
-    directive: SubscribeDirective<T, InitialSyncValue>,
+  static ngTemplateContextGuard<T>(
+    directive: SubscribeDirective<T>,
     context: unknown
-  ): context is SubscribeContext<IfAny<InitialSyncValue, T, T | undefined>> {
+  ): context is SubscribeContext<T> {
     return true;
   }
 
-  constructor(private tpl: TemplateRef<any>, private cdr: ChangeDetectorRef, private vcr: ViewContainerRef) {}
+  constructor(private tpl: TemplateRef<SubscribeContext<T>>, private cdr: ChangeDetectorRef, private vcr: ViewContainerRef) {
+  }
 
   ngOnInit() {
     this.viewRef = this.vcr.createEmbeddedView(this.tpl, this.context);
@@ -81,16 +71,10 @@ export class SubscribeDirective<T, InitialSyncValue extends boolean = true> impl
   }
 
   private onChange() {
-    if (this.strategy === 'markForCheck') {
+    if(this.strategy === 'markForCheck') {
       this.cdr.markForCheck();
     } else {
       this.viewRef?.detectChanges();
     }
   }
 }
-
-@NgModule({
-  declarations: [SubscribeDirective],
-  exports: [SubscribeDirective],
-})
-export class SubscribeModule {}
