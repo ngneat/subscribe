@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.0](https://github.com/ngneat/subscribe/compare/v3.0.2...v4.0.0) (2022-11-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* 🧨 upgrade to ng15
+
+### Features
+
+* 🎸 upgrade to ng15 ([ae6dd19](https://github.com/ngneat/subscribe/commit/ae6dd19240533781d1b0ce291d73553b6c97d4ed))
+
 ### [3.0.2](https://github.com/ngneat/subscribe/compare/v3.0.1...v3.0.2) (2022-03-28)
 
 
