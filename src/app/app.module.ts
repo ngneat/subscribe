@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SubscribeModule } from '@ngneat/subscribe';
+import { SubscribeDirective } from '@ngneat/subscribe';
 import { BarComponent } from './bar/bar.component';
 
 @NgModule({
@@ -14,7 +14,7 @@ import { BarComponent } from './bar/bar.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    SubscribeModule
+    SubscribeDirective
   ],
   providers: [],
   bootstrap: [AppComponent]

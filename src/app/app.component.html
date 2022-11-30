@@ -1,11 +1,11 @@
-<ng-template [subscribe]="source$" let-value> 
-  {{ value | json }}
-</ng-template>
-
-<ng-template [subscribe]="source$" let-value [initialSyncValue]="false"> 
+<ng-template [subscribe]="source$" let-value>
   {{ value | json }}
 </ng-template>
 
 <ng-container *subscribe="source$; let v">
-  <app-bar [name]="v?.bar?.label!"></app-bar>
+  <app-bar [name]="v.bar?.label ?? ''"></app-bar>
+</ng-container>
+
+<ng-container *subscribe="source$ as foo">
+  {{ foo }}
 </ng-container>
